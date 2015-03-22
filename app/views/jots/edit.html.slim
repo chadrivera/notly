@@ -1,0 +1,11 @@
+h1 Edit a jot!
+
+img src=@jot.photo.url(:medium) class="img-responsive"
+=form_for(@jot,:html => {:class => "form-horizontal center"}) do |f|
+  .field
+    ==f.label :text
+    ==f.text_area :text
+  .actions
+    ==f.submit 'Update Jot',class: "btn btn-primary btn-block"
+
+=link_to 'Delete Jot', jot_path(@jot), method: :delete,class: "btn btn-negative btn-block"

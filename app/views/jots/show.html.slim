@@ -1,0 +1,16 @@
+h1 This is a jot!
+
+img src=@jot.photo.url(:medium) class="img-responsive"
+h3
+  -if current_user.id == @jot.user_id
+    =link_to "#{@jot.text} / #{@jot.created_at} by #{@jot.user.displayname}\n", edit_jot_path(@jot)
+  -else
+    =link_to "#{@jot.text} / #{@jot.created_at} by #{@jot.user.displayname}\n", jot_path(@jot)
+
+p This jot has been liked
+-if @jot.likes_count == nil || @jot.likes_count == 0
+  p 0 times.
+-elsif @jot.likes_count == 1
+  p 1 time.
+-else
+  #{@jot.likes_count} times

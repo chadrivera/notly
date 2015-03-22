@@ -1,0 +1,15 @@
+h1 Login to Notly, totally not a jotly clone!
+
+h2 Sign-In
+
+
+.form-horizontal
+    =form_tag
+    .form-group
+      label class="col-sm-2 control-label" Email
+      input type="text" name="email" placeholder="name@example.dom"
+    .form-group
+      .col-sm-offset-2
+        input type="submit" value="Sign in!" class="btn btn-primary btn-lg"
+
+a class="btn btn-positive btn-outlined pull-right" href="#{new_user_path}"  Sign-Up

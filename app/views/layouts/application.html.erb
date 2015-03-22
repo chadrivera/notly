@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notly</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <!-- Sets initial viewport load and disables zooming  -->
+  <!-- <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+  <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+  <!-- <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"> -->
+  <%= yield :head %>
+
+</head>
+<body>
+  <div class="container">
+    <% if flash[:notice].present? %>
+        <div class="content-padded" style="background:lightskyblue">
+            <%= flash[:notice] %>
+        </div>
+
+      <% end %>
+      <% if flash[:warning].present? %>
+        <div class="content-padded" style="background:tomato">
+          <%= flash[:warning] %>
+        </div>
+      <% end %>
+  </div>
+
+  <div class="page-header">
+    <% if current_user %>
+      <h4>Welcome,
+         <%=current_user.displayname %>
+         <small><a href="/login">Sign in as someone else</a></small></h4>
+    <% else %>
+      <a href="/login">Sign In</a>
+    <% end %>
+  </div>
+
+
+  <%= yield %>
+</body>
+</html>

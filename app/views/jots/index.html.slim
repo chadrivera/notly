@@ -1,0 +1,49 @@
+-content_for :head
+  javascript:
+    navigator.geolocation.getCurrentPosition(function(position) {
+      $('#jot_latitude').val(position.coords.latitude)
+      $('#jot_longitude').val(position.coords.longitude)
+    })
+
+
+h1 Latest jots
+
+=form_for(@jot, html: {multipart:true}) do |f|
+  .field
+    ==f.file_field :photo
+  .field
+    ==f.label :text
+    ==f.text_area :text
+  .field
+    ==f.label :latitude
+    ==f.text_field :latitude
+  .field
+    ==f.label :longitude
+    ==f.text_field :longitude
+  .actions
+    ==f.submit 'Jot This!',class: "btn btn-primary btn-block"
+
+-if @jots.present?
+  -@jots.each do |jot|
+
+    div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+
+      -if jot.photo.url.present?
+        img src=jot.photo.url(:medium) class="img-responsive"
+      -else
+        img src="http://placehold.it/300x300" class="img-responsive"
+      =link_to "#{jot.text} / #{jot.created_at} by #{jot.user.displayname} (#{jot.likes_count == nil ? 0:jot.likes_count} likes)\n", jot_path(jot)
+
+      -if jot.liked_by(current_user)
+        =button_to "Unike", {:controller=>"jots",:action=>"unlike", :jot_id=>jot.id}, {:method=>:post}
+      -else
+        =button_to "Like", {:controller=>"jots",:action=>"like", :jot_id=>jot.id}, {:method=>:post}
+      / <td><%= button_to '+', {:controller => "votes", :action => "create", :car_id => car.id, :user_id=> session[:user_id]} , {:method=>:post}  %></td>
+
+
+      -if follows(current_user, jot.user)
+        =button_to "Unfollow", followers_path, method: :delete, params: {user_id: jot.user_id}
+      -else
+        =button_to "Follow", followers_path, params: {user_id: jot.user_id}
+-else
+  h3 No jots

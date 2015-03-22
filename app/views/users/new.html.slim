@@ -1,0 +1,11 @@
+h1 Welcome to Notly, totally not a jotly clone!
+
+=form_for(@user,:html => {:class => "form-horizontal center"}) do |f|
+  .field
+    ==f.label :email
+    ==f.text_field :email
+  .field
+    ==f.label :displayname
+    ==f.text_field :displayname
+  .actions
+    ==f.submit 'Create User',class: "btn btn-primary btn-block"
