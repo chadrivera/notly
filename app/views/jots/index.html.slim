@@ -1,9 +1,14 @@
 -content_for :head
   javascript:
+    console.log("setup");
     navigator.geolocation.getCurrentPosition(function(position) {
-      $('#jot_latitude').val(position.coords.latitude)
-      $('#jot_longitude').val(position.coords.longitude)
-    })
+      console.log("position.coords: ",position.coords);
+      $('#latitude').val(position.coords.latitude);
+      $('#longitude').val(position.coords.longitude);
+      $(".nearby a").attr("href", "/?mode=near&latitude="+position.coords.latitude+
+        "&longitude="+position.coords.longitude);
+      $(".nearby a").attr("disabled",false);
+    });
 
 -if session[:mode] == "all" || session[:mode] == nil
   =link_to "All Jots", jots_path(:mode => "all"), :class => "btn btn-primary"
@@ -15,10 +20,11 @@
 -else
   =link_to "Friend's Jots", jots_path(:mode => "friends"),:class => "btn btn-inverse"
 
--if session[:mode] == "near"
-  =link_to "Near by jots", jots_path(:mode =>"near"),:class => "btn btn-primary"
--else
-  =link_to "Near by jots", jots_path(:mode =>"near"),:class => "btn btn-inverse"
+span.nearby
+  -if session[:mode] == "near"
+    =link_to "Near by jots", jots_path(:mode =>"near"),:class => "btn btn-primary",:disabled => ""
+  -else
+    =link_to "Near by jots", jots_path(:mode =>"near"),:class => "btn btn-inverse",:disabled => ""
 
 
 h1 Latest jots
