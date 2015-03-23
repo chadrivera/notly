@@ -12,7 +12,8 @@ class User < ActiveRecord::Base
   validates_presence_of :displayname, uniqueness: :true
 
   def following_jots
-    Jot.joins(:user => :subscriptions).where('followers.user_id =?', id)
+    Jot.joins(:user => :subscribers).where('followers.subscriber_id =?', id)
   end
+
 
 end

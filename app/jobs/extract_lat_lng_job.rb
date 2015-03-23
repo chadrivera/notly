@@ -3,7 +3,9 @@ class ExtractLatLngJob < ActiveJob::Base
 
   def perform(jot)
     # Do something later
-    gps = EXIFR::JPEG.new(jot.photo_path).gps
-    jot.update(latitude: gps.latitute, longitude:gps.longitude)
+    gps = EXIFR::JPEG.new(jot.photo.path).gps
+    if gps
+      jot.update(latitude: gps.latitude, longitude:gps.longitude)
+    end
   end
 end

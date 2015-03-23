@@ -21,7 +21,7 @@ class Jot < ActiveRecord::Base
   validates_attachment_content_type :photo, :content_type => /\Aimage\/.*\Z/
   geocoded_by :address
 
-  #after_commit :extract_lat_lng_job, if: -> (jot) {jot.latitude.blank?}
+  #after_commit :extract_lat_lng, if: -> (jot) {jot.latitude.blank?}
 
   def liked_by(user)
     if self.likes.find_by_user_id(user.id)

@@ -1,3 +1,10 @@
+-content_for :head
+  javascript:
+    navigator.geolocation.getCurrentPosition(function(position) {
+      $('#jot_latitude').val(position.coords.latitude)
+      $('#jot_longitude').val(position.coords.longitude)
+    })
+
 h1 Login to Notly, totally not a jotly clone!
 
 h2 Sign-In
@@ -8,6 +15,10 @@ h2 Sign-In
     .form-group
       label class="col-sm-2 control-label" Email
       input type="text" name="email" placeholder="name@example.dom"
+    jot
+      input type="text" name="latitude"
+    jot
+      input type="text" name="longitude"
     .form-group
       .col-sm-offset-2
         input type="submit" value="Sign in!" class="btn btn-primary btn-lg"

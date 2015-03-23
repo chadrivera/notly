@@ -1,7 +1,17 @@
 class JotsController < ApplicationController
 
   def index
-    @jots = Jot.all.order('created_at desc')
+    #grab the jots according to session[:mode]]
+    if params[:mode]
+      session[:mode] = params[:mode]
+    end
+    if session[:mode] == 'friends'
+      @jots = current_user.following_jots.order('created_at desc')
+    elsif session[:mode] == 'near'
+      @jots = Jot.all.order('created_at desc')
+    else
+      @jots = Jot.all.order('created_at desc')
+    end
     @jot = Jot.new
 
   end
@@ -21,7 +31,7 @@ class JotsController < ApplicationController
     # TODO: Add error handling
     @jot = Jot.create(jots_params)
     #index photo
-  #  ExtractLatLngJob.perform_later(@jot)
+    ExtractLatLngJob.perform_later(@jot)
     redirect_to jots_path
   end
 
@@ -65,7 +75,7 @@ class JotsController < ApplicationController
   helper_method :follows
   private
   def jots_params
-    params.require(:jot).permit(:text,:photo).merge(user_id: current_user.id)
+    params.require(:jot).permit(:text,:photo,:latitude,:longitude).merge(user_id: current_user.id)
   end
 
 

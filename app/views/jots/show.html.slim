@@ -13,4 +13,8 @@ p This jot has been liked
 -elsif @jot.likes_count == 1
   p 1 time.
 -else
-  #{@jot.likes_count} times
+  p #{@jot.likes_count} times
+
+ul
+-@jot.likes.each do |like|
+  li =like.user.displayname
