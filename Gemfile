@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'dotenv-rails', :groups => [:development, :test]
+
 gem "paperclip", "~> 4.2"
 gem "geocoder"
 gem 'slim'

@@ -69,6 +69,9 @@ GEM
     connection_pool (2.1.2)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
+    dotenv (2.0.0)
+    dotenv-rails (2.0.0)
+      dotenv (= 2.0.0)
     erubis (2.7.0)
     execjs (2.4.0)
     exifr (1.2.1)
@@ -203,6 +206,7 @@ DEPENDENCIES
   byebug
   capybara
   coffee-rails (~> 4.1.0)
+  dotenv-rails
   exifr
   faker
   geocoder
