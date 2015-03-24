@@ -9,6 +9,9 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'
 end
 
+#for sidekiq monitoring
+gem 'sinatra', :require => nil
+
 gem 'sidekiq'
 gem 'exifr'
 

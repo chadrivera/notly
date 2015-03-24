@@ -1,4 +1,8 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
+
+  #for sidekiq monitoring
+  mount Sidekiq::Web => '/sidekiq'
 
   root 'jots#index'
   resources :jots
