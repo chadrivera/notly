@@ -3,7 +3,7 @@ class JotsController < ApplicationController
   def index
     #grab the jots according to session[:mode]]
     if current_user == nil
-      redirect_to new_session_path
+      redirect_to new_session_path and return
     end
     if params[:mode]
       session[:mode] = params[:mode]
@@ -13,22 +13,33 @@ class JotsController < ApplicationController
       @jots = current_user.following_jots.order('created_at desc')
     elsif session[:mode] == 'near'
       @jots = []
-      jot_list = Jot.all.order('created_at desc')
-      jot_list.each do |jot|
+      @jots = Jot.near([params[:latitude],params[:longitude]],5)
+      # jot_list = Jot.all.order('created_at desc')
+      # jot_list.each do |jot|
+      #
+      #   if jot.geocoded? && jot.latitude != nil
+      #     if jot.distance_from([params[:latitude],params[:longitude]]) < 5
+      #
+      #       @jots << jot
+      #     end
+      #   end
 
-        if jot.geocoded? && jot.latitude != nil
-          if jot.distance_from([params[:latitude],params[:longitude]]) < 5
-
-            @jots << jot
-          end
-        end
-      end
     else
       @jots = Jot.all.order('created_at desc')
 
     end
     @jot = Jot.new
 
+    if request.format == :json
+      data = @jots.map do |jot|
+        jot.slice(:id, :text, :latitude, :longitude)
+      end
+    end
+
+    respond_to do |format|
+      format.html
+      format.json {render json: data}
+    end
   end
 
   def show
