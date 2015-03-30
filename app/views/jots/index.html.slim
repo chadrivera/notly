@@ -5,6 +5,9 @@
       //Pre-fil lat & long with js api
       $('#latitude').val(position.coords.latitude);
       $('#longitude').val(position.coords.longitude);
+      //Now do it for the jot values
+      $('#jot_latitude').val(position.coords.latitude);
+      $('#jot_longitude').val(position.coords.longitude);
 
       // Fixing link to nearby
 
@@ -26,6 +29,12 @@
 span.nearby
   -if session[:mode] == "near"
     =link_to "Near by jots", jots_path(:mode =>"near"),:class => "btn btn-primary",:disabled => ""
+    // Add google maps
+    div id="panel"
+      input id="address" type="textbox" value="#{params[:latitude]},#{params[:longitude]}"
+      input type="button" value="Geocode" onclick="codeAddress()"
+    div id="map-canvas"
+
   -else
     =link_to "Near by jots", jots_path(:mode =>"near"),:class => "btn btn-inverse",:disabled => ""
 

@@ -16,12 +16,18 @@ class Jot < ActiveRecord::Base
 
   has_attached_file :photo,
     styles: { medium: "300x300>" },
-    default_url: "http://placehold.it/300x300"
+    default_url: "http://placehold.it/300x300",
+    :storage => :s3,
+    :s3_credentials => Proc.new{|a| a.instance.s3_credentials }
 
   validates_attachment_content_type :photo, :content_type => /\Aimage\/.*\Z/
   geocoded_by :address
 
   #after_commit :extract_lat_lng, if: -> (jot) {jot.latitude.blank?}
+  def s3_credentials
+    {:bucket => ENV['S3_BUCKET'], :access_key_id => ENV['ACCESS_KEY'],
+       :secret_access_key => ENV['SECRET_KEY']}
+  end
 
   def liked_by(user)
     if self.likes.find_by_user_id(user.id)

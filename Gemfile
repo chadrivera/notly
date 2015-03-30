@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 gem 'dotenv-rails', :groups => [:development, :test]
 
 gem "paperclip", "~> 4.2"
+gem 'aws-sdk-v1'
+gem 'aws-sdk', '~> 2'
 gem "geocoder"
 gem 'slim'
 source 'https://rails-assets.org' do
