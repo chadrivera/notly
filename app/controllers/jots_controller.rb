@@ -31,8 +31,10 @@ class JotsController < ApplicationController
     @jot = Jot.new
 
     if request.format == :json
+      # data = @jots.map do |jot|
+      #   jot.slice(:id, :text, :latitude, :longitude)
       data = @jots.map do |jot|
-        jot.slice(:id, :text, :latitude, :longitude)
+        {id: jot.id, text: jot.text, latitude: jot.latitude.to_f, longitude: jot.longitude.to_f }
       end
     end
 
